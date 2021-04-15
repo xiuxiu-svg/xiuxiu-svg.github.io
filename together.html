@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>秀秀与臭臭</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.js"> </script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"> </script>
+    <style>
+        .swiper-container {
+            width: 600px;
+            height: 300px;
+        }
+        .swiper-container .swiper-wrapper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!--轮播图-->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="./static/image/47875db5594d02026659c8b22c3adeb.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./static/image/a2.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./static/image/a3.jpg" alt=""></div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+        <!-- 如果需要滚动条 -->
+        <div class="swiper-scrollbar"></div>
+    </div>
+    <!--在一起时间计算-->
+    <div>
+<!--
+        我们在一起<span id="nian"></span>年<span id="yue"></span>月<span id="ri"></span>日 <span id="shi"></span>时 <span id="fen"></span>分 <span id="miao"></span>秒啦！
+-->
+    </div>
+    <script>
+        var mySwiper = new Swiper ('.swiper-container', {
+            direction: 'horizontal', // 垂直切换选项
+            loop: true, // 循环模式选项
+
+            // 如果需要分页器
+            pagination: {
+                el: '.swiper-pagination',
+            },
+
+            // 如果需要前进后退按钮
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // 如果需要滚动条
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+        })
+    </script>
+    <script>
+        var nian = document.getElementById("nian");
+        var ri = document.getElementById("ri");
+        var shi = document.getElementById("shi");
+        var yue = document.getElementById("yue");
+        var fen = document.getElementById("fen");
+        var miao = document.getElementById("miao");
+        var time = new Date("2020/08/09").getTime();
+        console.log(time)
+        function     getElapsedTime(t) {
+
+            let now = Date.now();
+            let elapsed = now - t
+            let result = ''
+            let second = 1000;
+            let minute = 60 * second;
+            let hours = 60 * minute;
+            let day = 24 * hours;
+            let months = [31,28,31,30,31,30,31,31,30,31,30,31]
+            let nowYear = new Date(now).getFullYear()
+            let nowMonth = new Date(now).getMonth()
+            //判断是不是闰年
+            if(nowYear%4===0 && nowYear%100!==0 || nowYear%400===0) months[1]=29;
+            let month = nowMonth+4;
+            yue = month;
+            let year = nowYear - new Date(t).getFullYear()
+
+            if (year !== 0 && month >= 12) {nian = year}else {nian = 0};
+
+            if (parse(day) !== 0) ri= parse(day)
+            if (parse(hours) !== 0) shi= parse(hours)
+            if (parse(minute) !== 0) fen = parse(minute)
+            if (parse(second) !== 0) miao = parse(second)
+
+            function parse(time) {
+                return  Math.round(elapsed/time)
+            }
+        };
+        getElapsedTime(time);
+        console.log(nian,yue,ri,shi,fen,miao)
+    </script>
+</body>
+</html>
